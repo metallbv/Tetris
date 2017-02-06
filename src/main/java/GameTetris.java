@@ -10,7 +10,7 @@ public class GameTetris extends JFrame {
 
     private final String TITLE_OF_PROGRAM = "Tetris";
     private final int BLOCK_SIZE = 25;
-    private final int ARC_RADIUS = 6;
+    //    private final int ARC_RADIUS = 6;
     private final int FIELD_WIDTH = 10; // in blocks
     private final int FIELD_HEIGHT = 20; // in blocks
     private final int START_LOCATION = 180;
@@ -136,7 +136,6 @@ public class GameTetris extends JFrame {
             type = random.nextInt(SHAPES.length);
             size = SHAPES[type][4][0];
             color = SHAPES[type][4][1];
-            if (size == 4) y = -1;
             for (int i = 0; i < size; i++)
                 System.arraycopy(SHAPES[type][i], 0, shape[i], 0, SHAPES[type][i].length);
             createFromShape();
@@ -171,7 +170,8 @@ public class GameTetris extends JFrame {
                     if (shape[y][x] == 1) {
                         if (y + this.y < 0) return true;
                         if (x + this.x < 0 || x + this.x > FIELD_WIDTH - 1) return true;
-                        if (mine[y + this.y][x + this.x] > 0) return true;
+                        if (mine[y + this.y][x + this.x] > 0)
+                            return true;
                     }
             return false;
         }
@@ -192,6 +192,7 @@ public class GameTetris extends JFrame {
                         shape[size - 1 - i][size - 1 - j] = shape[size - 1 - j][i];
                         shape[size - 1 - j][i] = tmp;
                     }
+
         }
 
         public void move(int direction) {
@@ -265,7 +266,8 @@ public class GameTetris extends JFrame {
         public void paint(Graphics graphics, int color) {
 
             graphics.setColor(new Color(color));
-            graphics.drawRoundRect(x * BLOCK_SIZE + 1, y * BLOCK_SIZE + 1, BLOCK_SIZE - 2, BLOCK_SIZE - 2, ARC_RADIUS, ARC_RADIUS);
+            //graphics.drawRoundRect(x * BLOCK_SIZE + 1, y * BLOCK_SIZE + 1, BLOCK_SIZE - 2, BLOCK_SIZE - 2, ARC_RADIUS, ARC_RADIUS);
+            graphics.fill3DRect(x * BLOCK_SIZE + 1, y * BLOCK_SIZE + 1, BLOCK_SIZE - 2, BLOCK_SIZE - 2, true);
 
         }
 
@@ -279,11 +281,13 @@ public class GameTetris extends JFrame {
 
             for (int x = 0; x < FIELD_WIDTH; x++)
                 for (int y = 0; y < FIELD_HEIGHT; y++) {
-                    if (x < FIELD_WIDTH - 1 && y < FIELD_HEIGHT - 1) {
-                        graphics.setColor(Color.lightGray);
-                        graphics.drawLine((x + 1) * BLOCK_SIZE - 2, (y + 1) * BLOCK_SIZE, (x + 1) * BLOCK_SIZE + 2, (y + 1) * BLOCK_SIZE);
-                        graphics.drawLine((x + 1) * BLOCK_SIZE, (y + 1) * BLOCK_SIZE - 2, (x + 1) * BLOCK_SIZE, (y + 1) * BLOCK_SIZE + 2);
-                    }
+
+//                    if (x < FIELD_WIDTH - 1 && y < FIELD_HEIGHT - 1) {
+//                        graphics.setColor(Color.lightGray);
+//                        graphics.drawLine((x + 1) * BLOCK_SIZE - 2, (y + 1) * BLOCK_SIZE, (x + 1) * BLOCK_SIZE + 2, (y + 1) * BLOCK_SIZE);
+//                        graphics.drawLine((x + 1) * BLOCK_SIZE, (y + 1) * BLOCK_SIZE - 2, (x + 1) * BLOCK_SIZE, (y + 1) * BLOCK_SIZE + 2);
+//                    }
+
                     if (mine[y][x] > 0) {
                         graphics.setColor(new Color(mine[y][x]));
                         graphics.fill3DRect(x * BLOCK_SIZE + 1, y * BLOCK_SIZE + 1, BLOCK_SIZE - 1, BLOCK_SIZE - 1, true);
